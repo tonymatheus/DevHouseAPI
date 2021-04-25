@@ -45,7 +45,7 @@ class ReserveController {
 
     await Reserve.findByIdAndDelete({ _id: reserve_id });
 
-    return res.send("Rserva excluída com sucesso");
+    return res.send("Reserva excluída com sucesso");
   }
 }
 
