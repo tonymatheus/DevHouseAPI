@@ -1,5 +1,6 @@
 import House from "../models/House";
 import User from "../models/User";
+import * as Yupe from "yup";
 class Housecontroller {
   async index(req, res) {
     const { status } = req.query;
@@ -10,10 +11,21 @@ class Housecontroller {
   }
 
   async update(req, res) {
+    const schema = Yupe.object().shape({
+      description: Yupe.string().required(),
+      price: Yupe.number().required(),
+      location: Yupe.string().required(),
+      status: Yupe.boolean().required(),
+    });
+
     const { filename } = req.file;
     const { house_id } = req.params;
     const { description, price, location, status } = req.body;
     const { user_id } = req.headers;
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ erro: "Erro na validação" });
+    }
 
     const user = await User.findById(user_id);
     const houses = await House.findById(house_id);
@@ -41,6 +53,17 @@ class Housecontroller {
 
   //cadastra novas casas
   async store(req, res) {
+    const schema = Yupe.object().shape({
+      description: Yupe.string().required(),
+      price: Yupe.number().required(),
+      location: Yupe.string().required(),
+      status: Yupe.boolean().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ erro: "Erro na validação" });
+    }
+
     const { filename } = req.file;
     const { description, price, location, status } = req.body;
     const { user_id } = req.headers;
