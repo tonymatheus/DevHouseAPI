@@ -59,7 +59,17 @@ class Housecontroller {
 
   async destroy(req, res) {
     const { house_id } = req.body;
-    const { user_id } = req.header;
+    const { user_id } = req.headers;
+
+    const user = await User.findById(user_id);
+    const houses = await House.findById(house_id);
+
+    console.log(user);
+    if (String(user._id) !== String(houses.user)) {
+      return res
+        .status(401)
+        .json({ erro: "Usuário não autorizado para excluir casa" });
+    }
 
     await House.findByIdAndDelete({ _id: house_id });
 
