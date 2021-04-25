@@ -56,6 +56,15 @@ class Housecontroller {
 
     return res.json(house);
   }
+
+  async destroy(req, res) {
+    const { house_id } = req.body;
+    const { user_id } = req.header;
+
+    await House.findByIdAndDelete({ _id: house_id });
+
+    return res.json({ message: "excluida com sucesso!!" });
+  }
 }
 
 export default new Housecontroller();
