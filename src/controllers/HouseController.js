@@ -88,7 +88,6 @@ class Housecontroller {
     const user = await User.findById(user_id);
     const houses = await House.findById(house_id);
 
-    console.log(user);
     if (String(user._id) !== String(houses.user)) {
       return res
         .status(401)
