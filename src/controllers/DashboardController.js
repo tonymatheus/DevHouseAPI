@@ -1,4 +1,4 @@
-import House from "../models/House";
+import House from '../models/House';
 
 class DashboardControler {
   async show(req, res) {

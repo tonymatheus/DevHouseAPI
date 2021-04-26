@@ -1,6 +1,7 @@
-import House from "../models/House";
-import User from "../models/User";
-import * as Yupe from "yup";
+import * as Yupe from 'yup';
+import House from '../models/House';
+import User from '../models/User';
+
 class Housecontroller {
   async index(req, res) {
     const { status } = req.query;
@@ -24,7 +25,7 @@ class Housecontroller {
     const { user_id } = req.headers;
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ erro: "Erro na validação" });
+      return res.status(400).json({ erro: 'Erro na validação' });
     }
 
     const user = await User.findById(user_id);
@@ -33,7 +34,7 @@ class Housecontroller {
     if (String(user._id) !== String(houses.user)) {
       return res
         .status(401)
-        .json({ erro: "Usuário não autorizado para atualizar casa" });
+        .json({ erro: 'Usuário não autorizado para atualizar casa' });
     }
 
     await House.updateOne(
@@ -51,7 +52,7 @@ class Housecontroller {
     return res.send();
   }
 
-  //cadastra novas casas
+  // cadastra novas casas
   async store(req, res) {
     const schema = Yupe.object().shape({
       description: Yupe.string().required(),
@@ -61,7 +62,7 @@ class Housecontroller {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ erro: "Erro na validação" });
+      return res.status(400).json({ erro: 'Erro na validação' });
     }
 
     const { filename } = req.file;
@@ -91,12 +92,12 @@ class Housecontroller {
     if (String(user._id) !== String(houses.user)) {
       return res
         .status(401)
-        .json({ erro: "Usuário não autorizado para excluir casa" });
+        .json({ erro: 'Usuário não autorizado para excluir casa' });
     }
 
     await House.findByIdAndDelete({ _id: house_id });
 
-    return res.json({ message: "excluida com sucesso!!" });
+    return res.json({ message: 'excluida com sucesso!!' });
   }
 }
 

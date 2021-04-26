@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const HouseScheme = new Schema(
   {
@@ -9,7 +9,7 @@ const HouseScheme = new Schema(
     status: Boolean,
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
   },
   {
@@ -19,8 +19,8 @@ const HouseScheme = new Schema(
   }
 );
 
-HouseScheme.virtual("thumbnail_url").get(function () {
+HouseScheme.virtual('thumbnail_url').get(function () {
   return `http://localhost:3333/files/${this.thumbnail}`;
 });
 
-export default model("House", HouseScheme);
+export default model('House', HouseScheme);
